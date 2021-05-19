@@ -50,11 +50,19 @@ body {
   padding: 0px 10px;
 }
 .todo.title{
-  width: 300px;
+  width: 200px;
 }
 
 .todo.body{
-  width: 350px;
+  width: 300px;
+}
+
+.todo.status{
+  width: 80px;
+}
+
+.todo.category{
+  width: 130px;
 }
 
 .todoContainer{

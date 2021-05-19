@@ -3,15 +3,23 @@
 * to do sample project
 *
 *@
+@import model._
+@import lib.model.{ ToDo, ToDoCategory }
 
 @(vv:   model.ViewValueToDoList)
 @common.Default(vv){
+  <div class="todoContainer">
+    <div class="todo title">タイトル</div>
+    <div class="todo body">本文</div>
+    <div class="todo status">ステータス</div>
+    <div class="todo category">カテゴリ</div>
+  </div>
   @for(todo <- vv.toDoList) {
     <div class="todoContainer">
-      <div class="todo">ID: @todo.id</div>
-      <div class="todo title">タイトル: @todo.title</div>
-      <div class="todo body">本文: @todo.body</div>
-      <div class="todo">ステータス: @todo.state.name</div>
+      <div class="todo title">@todo.title</div>
+      <div class="todo body">@todo.body</div>
+      <div class="todo status">@todo.status.name</div>
+      <div class="todo category">@todo.categoryName</div>
     </div>
   }
 }
