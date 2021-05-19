@@ -18,7 +18,7 @@ case class ToDo(
   categoryId: ToDoCategory.Id,
   title:      String,
   body:       String,
-  state:      ToDoStatus,
+  status:     ToDoStatus,
   createdAt:  LocalDateTime = NOW,
   updatedAt:  LocalDateTime = NOW
 ) extends EntityModel[Id]
@@ -42,14 +42,14 @@ object ToDo {
   }
 
   // INSERT時のIDがAutoincrementのため,IDなしであることを示すオブジェクトに変換
-  def apply(categoryId: ToDoCategory.Id, title: String, body: String, state: ToDoStatus): WithNoId = {
+  def apply(categoryId: ToDoCategory.Id, title: String, body: String, status: ToDoStatus): WithNoId = {
     new Entity.WithNoId(
       new ToDo(
         id          = None,
         categoryId  = categoryId,
         title       = title,
         body        = body,
-        state       = state
+        status      = status
       )
     )
   }
