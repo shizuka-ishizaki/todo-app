@@ -21,7 +21,7 @@ case class ToDoCategoryRepository[P <: JdbcProfile]()(implicit val driver: P)
   /**
    * GetAll ToDo Data
    */
-  def getAll(): Future[Seq[EntityEmbeddedId]] =
+  def all(): Future[Seq[EntityEmbeddedId]] =
     RunDBAction(ToDoCategoryTable, "slave") { _
         .result
     }
