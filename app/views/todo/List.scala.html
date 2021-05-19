@@ -1,0 +1,17 @@
+@*
+*
+* to do sample project
+*
+*@
+
+@(vv:   model.ViewValueToDoList)
+@common.Default(vv){
+  @for(todo <- vv.toDoList) {
+    <div class="todoContainer">
+      <div class="todo">ID: @todo.id</div>
+      <div class="todo title">タイトル: @todo.title</div>
+      <div class="todo body">本文: @todo.body</div>
+      <div class="todo">ステータス: @todo.state.name</div>
+    </div>
+  }
+}

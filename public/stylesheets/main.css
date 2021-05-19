@@ -43,3 +43,20 @@ body {
 .info {
   display: none;
 }
+
+/***** 追加 *****/
+.todo{
+  float: left;
+  padding: 0px 10px;
+}
+.todo.title{
+  width: 300px;
+}
+
+.todo.body{
+  width: 350px;
+}
+
+.todoContainer{
+  overflow: hidden;
+}
