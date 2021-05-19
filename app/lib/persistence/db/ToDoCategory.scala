@@ -10,6 +10,7 @@ import slick.jdbc.JdbcProfile
 import ixias.persistence.model.Table
 
 import lib.model.ToDoCategory
+import lib.model.ToDoCategory.CategoryColor
 
 // ToDoCategoryTable: ToDoCategoryテーブルへのマッピングを行う
 //~~~~~~~~~~~~~~

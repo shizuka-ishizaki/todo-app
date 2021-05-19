@@ -10,6 +10,7 @@ import slick.jdbc.JdbcProfile
 import ixias.persistence.model.Table
 
 import lib.model.{ToDo, ToDoCategory}
+import lib.model.ToDo.ToDoStatus
 
 // ToDoTable: ToDoテーブルへのマッピングを行う
 //~~~~~~~~~~~~~~
