@@ -1,17 +1,6 @@
-@*
- *
- * to do sample project
- *
- *@
+@(elements: helper.FieldElements)
 
-@(vv: model.ViewValueCommon)
-@common.Default(vv){
-   <ul>
-    <li>
-      <a href="@controllers.todo.routes.ToDoController.list()">
-        ToDoリスト
-      </a>
-    </li>
-    <li><a>カテゴリー一覧</a></li>
- </ul>
-}
+@elements.input
+<div class="@if(elements.hasErrors) {error}">
+  <span class="errors">@elements.errors.mkString(", ")</span>
+</div>

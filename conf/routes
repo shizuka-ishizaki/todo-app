@@ -11,3 +11,6 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 
 GET     /todo/list                  controllers.todo.ToDoController.list
+
+GET     /todo/add                  controllers.todo.ToDoController.register
+POST    /todo/add                  controllers.todo.ToDoController.add

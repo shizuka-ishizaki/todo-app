@@ -1,9 +1,70 @@
 /**　ToDoリスト画面 **/
-.todoContainer {
+.form {
+  width : 500px;
+  margin: 10px;
+}
+.form__item {
   display: flex;
 }
-.todoContainer .todo {
-  padding: 0px 10px;
+.form__item-title {
+  width   : 100px;
+  padding : 5px;
+}
+
+.form__item-input input {
+  width   : 300px;
+  height  : 20px;
+}
+
+.form__item-textarea textarea {
+  width   : 300px;
+  height  : 150px;
+}
+
+.form__item-select {
+  position    : relative;
+  /*Don't really need this just for demo styling*/
+  float       : left;
+  min-width   : 200px;
+}
+
+.form__item-select:after {
+  content             : '<>';
+  font                : 12px "Consolas", monospace;
+  color               : #333;
+  -webkit-transform   : rotate(90deg);
+  -moz-transform      : rotate(90deg);
+  -ms-transform       : rotate(90deg);
+  transform           : rotate(90deg);
+  right               : 11px;
+  /*Adjust for position however you want*/
+  top                 : 10px;
+  padding             : 0 0 2px;
+  border-bottom       : 1px solid #999;
+  /*left line */
+  position            : absolute;
+  pointer-events      : none;
+}
+
+.form__item-select select {
+  -webkit-appearance  : none;
+  -moz-appearance     : none;
+  appearance          : none;
+  /* Add some styling */
+  display             : block;
+  width               : 100%;
+  max-width           : 320px;
+  float               : right;
+  margin              : 5px 0px;
+  padding             : 0px 24px;
+  font-size           : 15px;
+  line-height         : 1.75;
+  color               : #333;
+  background-color    : #ffffff;
+  background-image    : none;
+  border              : 1px solid #cccccc;
+  -ms-word-break      : normal;
+  word-break          : normal;
 }
 
 .todoContainer .todo p {
@@ -67,6 +128,7 @@
   line-height   : 1em;         /* 1行の高さ  */
   transition    : .3s;         /* なめらか変化 */
   border        : 1px solid #666666;    /* 枠の指定 */
+  font-size     : 12px;
 }
 .footer .footer_button-add:hover {
   color         : #ffffff;     /* 背景色     */
@@ -85,6 +147,7 @@
   line-height   : 1em;         /* 1行の高さ  */
   transition    : .3s;         /* なめらか変化 */
   border        : 1px solid #666666;    /* 枠の指定 */
+  font-size     : 12px;
 }
 .footer .footer_button-back:hover {
   color         : #ffffff;     /* 背景色     */

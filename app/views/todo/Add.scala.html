@@ -3,40 +3,38 @@
 * to do sample project
 *
 *@
+@import controllers.todo.ToDoFormData
 @import model._
-@import lib.model.{ ToDo, ToDoCategory }
-
-@(vv:   model.ViewValueToDoList)
+@import helper._
+@(vv: model.ViewValueToDoAdd)(implicit requestHeader: RequestHeader, messagesPrivider: MessagesProvider)
+@implicitField = @{ FieldConstructor(FieldConstructorTemplate.f) }
 @common.Default(vv){
-  <div class="todoContainer">
-    <div class="todoContainer">
-      <div class="todo">
-        <p class="title">タイトル</p>
+  @form(action = controllers.todo.routes.ToDoController.add()) {
+    @* CSRFトークンの生成ヘルパーを呼び出している。これでいい感じにトークンが用意されます。 *@
+    @CSRF.formField
+    <div class="form">
+      <div class="form__item">
+        <div class="form__item-title">タイトル</div>
+        <div class="form__item-input">@inputText(vv.toDoForm("title"))</div>
       </div>
-      <div class="todo">
-        <p class="body">本文</p>
+      <div class="form__item">
+        <div class="form__item-title">本文</div>
+        <div class="form__item-textarea">@textarea(vv.toDoForm("body"))</div>
       </div>
-      <div class="todo">
-        <p class="status">ステータス</p>
+      <div class="form__item">
+        <div class="form__item-title">カテゴリ</div>
+        <div class="form__item-select">
+          @select(
+            vv.toDoForm("categoryId"),
+            options = vv.categorys,
+          )
+        </div>
       </div>
-      <div class="todo">
-        <p class="categoryName">カテゴリ</p>
-      </div>
-    </div>
-  </div>
-  @for(todo <- vv.toDoList) {
-    <div class="todoContainer">
-      <div class="todo">
-        <p class="title">@todo.title</p>
-      </div>
-      <div class="todo">
-        <p class="body">@todo.body</p>
-      </div>
-      <div class="todo">
-        <p class="status">@todo.status.name</p>
-      </div>
-      <div class="todo">
-        <p class="categoryName @todo.categoryColor.name">@todo.categoryName</p>
+      <div class="footer">
+        <a class="footer_button-back" href="@controllers.todo.routes.ToDoController.list()">
+          戻る
+        </a>
+        <input type="submit" class="footer_button-add" value="登録">
       </div>
     </div>
   }
