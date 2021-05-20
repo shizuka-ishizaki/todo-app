@@ -39,7 +39,7 @@ object ToDoCategory {
     case object RED       extends CategoryColor(code = 1, name = "赤")
     case object GREEN     extends CategoryColor(code = 2, name = "緑")
     case object BLUE      extends CategoryColor(code = 3, name = "青")
-    case object Yellow    extends CategoryColor(code = 4, name = "黄")
+    case object YELLOW    extends CategoryColor(code = 4, name = "黄")
   }
 
   // INSERT時のIDがAutoincrementのため,IDなしであることを示すオブジェクトに変換
