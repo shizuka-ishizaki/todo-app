@@ -42,7 +42,7 @@ class ToDoController @Inject()(val controllerComponents: ControllerComponents)
     mapping(
       "title"       -> nonEmptyText,
       "body"        -> nonEmptyText,
-      "state"       -> shortNumber(min = 0, max = 2),
+      "status"      -> shortNumber(min = 0, max = 2),
       "categoryId"  -> longNumber
     )(ToDoFormData.apply)(ToDoFormData.unapply)
   )
@@ -108,7 +108,6 @@ class ToDoController @Inject()(val controllerComponents: ControllerComponents)
         // 処理が失敗した場合に呼び出される関数
         // 処理失敗の例: バリデーションエラー
         (formWithErrors: Form[ToDoFormData]) => {
-          println("kotiきた: " + formWithErrors)
           for {
             categorySeq <- ToDoCategoryRepository.all()
           } yield {
@@ -127,7 +126,6 @@ class ToDoController @Inject()(val controllerComponents: ControllerComponents)
 
       // 処理が成功した場合に呼び出される関数
       (toDoForm: ToDoFormData) => {
-        println("kokoきた")
         // 登録処理としてSeqに画面から受け取ったコンテンツを持つTweetを追加
         // 登録が完了したら一覧画面へリダイレクトする
         val todoWithNoId = new ToDo(

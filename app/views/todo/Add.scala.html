@@ -4,6 +4,8 @@
 *
 *@
 @import controllers.todo.ToDoFormData
+@import lib.model.{ToDo, ToDoCategory}
+@import lib.model.ToDo.ToDoStatus
 @import model._
 @import helper._
 @(vv: model.ViewValueToDoAdd)(implicit requestHeader: RequestHeader, messagesPrivider: MessagesProvider)
@@ -27,6 +29,15 @@
           @select(
             vv.toDoForm("categoryId"),
             options = vv.categorys,
+          )
+        </div>
+      </div>
+      <div class="form__item">
+        <div class="form__item-title">ステータス</div>
+        <div class="form__item-select">
+          @select(
+            vv.toDoForm("status"),
+            options = Seq(ToDoStatus.TODO.code.toString -> ToDoStatus.TODO.name),
           )
         </div>
       </div>
