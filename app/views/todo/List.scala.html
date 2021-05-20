@@ -22,7 +22,7 @@
       <p class="categoryName">カテゴリ</p>
     </div>
   </div>
-  
+
   @for(todo <- vv.toDoList) {
     <div class="todoContainer">
       <div class="todo">
@@ -39,4 +39,12 @@
       </div>
     </div>
   }
+  <div class="footer">
+    <a class="footer_button-back" href="@controllers.routes.HomeController.index()">
+      戻る
+    </a>
+    <a class="footer_button-add" href="@controllers.todo.routes.ToDoController.register()">
+      追加
+    </a>
+  </div>
 }

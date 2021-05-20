@@ -53,7 +53,6 @@
   margin    : 10px;
   padding   : 5px;
   height    : 30px;
-  width     : 800px;
 }
 
 .footer .footer_button-add {
@@ -68,7 +67,6 @@
   line-height   : 1em;         /* 1行の高さ  */
   transition    : .3s;         /* なめらか変化 */
   border        : 1px solid #666666;    /* 枠の指定 */
-  font-size     : 12px;
 }
 .footer .footer_button-add:hover {
   color         : #ffffff;     /* 背景色     */
@@ -87,7 +85,6 @@
   line-height   : 1em;         /* 1行の高さ  */
   transition    : .3s;         /* なめらか変化 */
   border        : 1px solid #666666;    /* 枠の指定 */
-  font-size     : 12px;
 }
 .footer .footer_button-back:hover {
   color         : #ffffff;     /* 背景色     */
