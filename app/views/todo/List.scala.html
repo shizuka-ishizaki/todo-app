@@ -9,17 +9,35 @@
 @(vv:   model.ViewValueToDoList)
 @common.Default(vv){
   <div class="todoContainer">
-    <div class="todo title">タイトル</div>
-    <div class="todo body">本文</div>
-    <div class="todo status">ステータス</div>
-    <div class="todo category">カテゴリ</div>
+    <div class="todoContainer">
+      <div class="todo">
+        <p class="title">タイトル</p>
+      </div>
+      <div class="todo">
+        <p class="body">本文</p>
+      </div>
+      <div class="todo">
+        <p class="status">ステータス</p>
+      </div>
+      <div class="todo">
+        <p class="categoryName">カテゴリ</p>
+      </div>
+    </div>
   </div>
   @for(todo <- vv.toDoList) {
     <div class="todoContainer">
-      <div class="todo title">@todo.title</div>
-      <div class="todo body">@todo.body</div>
-      <div class="todo status">@todo.status.name</div>
-      <div class="todo category">@todo.categoryName</div>
+      <div class="todo">
+        <p class="title">@todo.title</p>
+      </div>
+      <div class="todo">
+        <p class="body">@todo.body</p>
+      </div>
+      <div class="todo">
+        <p class="status">@todo.status.name</p>
+      </div>
+      <div class="todo">
+        <p class="categoryName @todo.categoryColor.name">@todo.categoryName</p>
+      </div>
     </div>
   }
 }

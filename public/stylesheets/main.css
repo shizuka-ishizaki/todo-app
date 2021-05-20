@@ -45,26 +45,52 @@ body {
 }
 
 /***** 追加 *****/
-.todo{
-  float: left;
+.todoContainer {
+  display: flex;
+}
+.todoContainer .todo {
   padding: 0px 10px;
 }
-.todo.title{
+
+.todoContainer .todo p {
+  padding: 0px;
+  margin: 0px;
+}
+
+.todo .title {
   width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.todo.body{
+.todo .body {
   width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.todo.status{
+.todo .status {
   width: 80px;
 }
 
-.todo.category{
+.todo .categoryName {
   width: 130px;
 }
 
-.todoContainer{
-  overflow: hidden;
+.categoryName.red {
+  color: red;
+}
+
+.categoryName.green {
+  color: green;
+}
+
+.categoryName.blue {
+  color: blue;
+}
+
+.categoryName.yellow {
+  color: yellow;
 }
