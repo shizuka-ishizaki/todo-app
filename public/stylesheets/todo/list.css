@@ -1,0 +1,50 @@
+/**　ToDoリスト画面 **/
+.todoContainer {
+  display: flex;
+}
+.todoContainer .todo {
+  padding: 0px 10px;
+}
+
+.todoContainer .todo p {
+  padding: 0px;
+  margin: 0px;
+}
+
+.todo .title {
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.todo .body {
+  width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.todo .status {
+  width: 80px;
+}
+
+.todo .categoryName {
+  width: 130px;
+}
+
+.categoryName.red {
+  color: red;
+}
+
+.categoryName.green {
+  color: green;
+}
+
+.categoryName.blue {
+  color: blue;
+}
+
+.categoryName.yellow {
+  color: yellow;
+}

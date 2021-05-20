@@ -12,12 +12,17 @@ import play.api.Configuration
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 import lib.persistence.default.{ToDoRepository, ToDoCategoryRepository}
-import model.{ViewValueToDoList, ToDoWithCategory}
+import model.{ViewValueToDoList, ToDoWithCategory, ViewValueToDoAdd}
 import lib.model.ToDo
 import lib.model.ToDoCategory.CategoryColor
+
+
 @Singleton
 class ToDoController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
 
+  /**
+   * ToDo一覧画面の表示用
+   */
   def list() = Action async {implicit request: Request[AnyContent] =>
     for {
       todoSeq <- ToDoRepository.all()
@@ -36,7 +41,7 @@ class ToDoController @Inject()(val controllerComponents: ControllerComponents) e
       }
       val vv = ViewValueToDoList(
         title    = "ToDoリスト",
-        cssSrc   = Seq("main.css"),
+        cssSrc   = Seq("main.css", "todo/list.css"),
         jsSrc    = Seq("main.js"),
         toDoList = todoList
       )
