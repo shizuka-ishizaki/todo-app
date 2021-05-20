@@ -32,20 +32,12 @@
           )
         </div>
       </div>
-      <div class="form__item">
-        <div class="form__item-title">ステータス</div>
-        <div class="form__item-select">
-          @select(
-            vv.toDoForm("status"),
-            options = Seq(ToDoStatus.TODO.code.toString -> ToDoStatus.TODO.name),
-          )
-        </div>
-      </div>
       <div class="footer">
         <a class="footer_button-back" href="@controllers.todo.routes.ToDoController.list()">
           戻る
         </a>
         <input type="submit" class="footer_button-add" value="登録">
+        <input type="hidden" value="@ToDoStatus.TODO.code.toString" name="status">
       </div>
     </div>
   }
