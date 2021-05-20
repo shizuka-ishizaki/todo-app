@@ -115,7 +115,7 @@ class ToDoController @Inject()(val controllerComponents: ControllerComponents)
               title     = "ToDo登録",
               cssSrc    = Seq("main.css", "todo/add.css"),
               jsSrc     = Seq("main.js"),
-              toDoForm  = toDoForm,
+              toDoForm  = formWithErrors,
               categorys = categorySeq.map( category =>
                 (category.id.toString -> category.v.name)
               )
