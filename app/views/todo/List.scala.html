@@ -4,11 +4,13 @@
 *
 *@
 @import model._
-@import lib.model.{ ToDo, ToDoCategory }
-
-@(vv:   model.ViewValueToDoList)
+@import helper._
+@import lib.model.ToDo
+@(vv:   model.ViewValueToDoList)(implicit requestHeader: RequestHeader, messagesPrivider: MessagesProvider, flash: Flash)
+@implicitField = @{ FieldConstructor(FieldConstructorTemplate.f) }
 @common.Default(vv){
   <div class="content">
+    <p class="flash">@flash.get("success").getOrElse("")</p>
     <div class="todoContainer">
       <div class="todo">
         <p class="title">タイトル</p>
@@ -42,11 +44,20 @@
           <p class="categoryName @todo.categoryColor.name">@todo.categoryName</p>
         </div>
         <div class="todo">
-          <p class="edit">
-            <a class="todo_button-edit"
+          <p class="side">
+            <a class="todo_icon"
                href="@controllers.todo.routes.ToDoController.edit(todo.id)">
-              編集
+              <i class="far fa-edit"></i>
             </a>
+          </p>
+        </div>
+        <div class="todo">
+          <p class="side">
+            @form(action = controllers.todo.routes.ToDoController.delete()) {
+              @CSRF.formField
+              <input type="hidden" value="@todo.id" name="id">
+              <i class="far fa-trash-alt delete"></i>
+            }
           </p>
         </div>
       </div>

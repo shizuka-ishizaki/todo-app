@@ -70,7 +70,7 @@ class ToDoController @Inject()(val controllerComponents: ControllerComponents)
       val vv = ViewValueToDoList(
         title    = "ToDoリスト",
         cssSrc   = Seq("main.css", "todo/list.css"),
-        jsSrc    = Seq("main.js"),
+        jsSrc    = Seq("main.js",  "todo/list.js"),
         toDoList = todoList
       )
       Ok(views.html.todo.List(vv))
@@ -138,6 +138,7 @@ class ToDoController @Inject()(val controllerComponents: ControllerComponents)
           _ <- ToDoRepository.add(todoWithNoId)
         } yield {
           Redirect(routes.ToDoController.list())
+            .flashing("success" -> "ToDoを追加しました!")
         }
       }
     )
@@ -195,7 +196,6 @@ class ToDoController @Inject()(val controllerComponents: ControllerComponents)
           // 処理が失敗した場合に呼び出される関数
           // 処理失敗の例: バリデーションエラー
           (formWithErrors: Form[ToDoFormData]) => {
-            println("koti" + formWithErrors)
             for {
               categorySeq <- ToDoCategoryRepository.all()
             } yield {
@@ -215,7 +215,6 @@ class ToDoController @Inject()(val controllerComponents: ControllerComponents)
 
           // 処理が成功した場合に呼び出される関数
           (toDoForm: ToDoFormData) => {
-            println("ati" + toDoForm)
             val todoWithNoId = new ToDo(
               id          = Some(ToDo.Id(id)),
               categoryId  = ToDoCategory.Id(toDoForm.categoryId),
@@ -235,10 +234,37 @@ class ToDoController @Inject()(val controllerComponents: ControllerComponents)
                     message   = "ページが見つかりません。"
                   )
                   NotFound(views.html.error.Page404(vv))
-                case Some(_)  => Redirect(routes.ToDoController.list())
+                case Some(_)  =>
+                  Redirect(routes.ToDoController.list())
+                    .flashing("success" -> "ToDoを更新しました!")
               }
             }
           }
         )
+  }
+
+  /**
+   * 削除処理
+   */
+  def delete() = Action async { implicit request: Request[AnyContent] =>
+    // requestから直接値を取得するサンプル
+    val idOpt = request.body.asFormUrlEncoded.get("id").headOption
+    for {
+      result <- ToDoRepository.remove(ToDo.Id(idOpt.map(_.toLong).getOrElse(0L)))
+    } yield {
+      result match {
+        case None        =>
+          val vv = ViewValueError(
+            title     = "404",
+            cssSrc    = Seq("main.css"),
+            jsSrc     = Seq("main.js"),
+            message   = "ページが見つかりません。"
+          )
+          NotFound(views.html.error.Page404(vv))
+        case Some(_)  =>
+          Redirect(routes.ToDoController.list())
+            .flashing("success" -> "ToDoを削除しました!")
+      }
+    }
   }
 }

@@ -1,33 +1,38 @@
 /**　ToDoリスト画面 **/
 .content {
-  width: 930px;
   margin: 10px;
 }
+
+.flash{
+  color     : #0000ff;
+  font-size : 18px;
+}
+
 .todoContainer {
-  display: flex;
-  height: 30px;
+  display : flex;
+  height  : 30px;
 }
 .todoContainer .todo {
   padding: 0px 10px;
 }
 
 .todoContainer .todo p {
-  padding: 0px;
-  margin: 0px;
+  padding : 0px;
+  margin  : 0px;
 }
 
 .todo .title {
-  width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  width           : 150px;
+  overflow        : hidden;
+  text-overflow   : ellipsis;
+  white-space     : nowrap;
 }
 
 .todo .body {
-  width: 300px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  width           : 200px;
+  overflow        : hidden;
+  text-overflow   : ellipsis;
+  white-space     : nowrap;
 }
 
 .todo .status {
@@ -54,7 +59,7 @@
   color: yellow;
 }
 
-.edit .todo_button-edit {
+.side .todo_button-edit {
   display         : inline-block;
   border-radius   : 20%;          /* 角丸       */
   text-align      : center;      /* 文字位置   */
@@ -68,7 +73,26 @@
   font-size       : 12px;
   text-decoration : none;
 }
-.edit .todo_button-edit:hover {
+.side .todo_button-edit:hover {
   color         : #ffffff;     /* 背景色     */
   background    : #ff7f00;     /* 文字色     */
+}
+
+.side .todo_button-delete {
+  display         : inline-block;
+  border-radius   : 20%;          /* 角丸       */
+  text-align      : center;      /* 文字位置   */
+  cursor          : pointer;     /* カーソル   */
+  padding         : 5px;         /* 余白       */
+  background      : #ffffff;     /* 背景色     */
+  color           : #ff0000;     /* 文字色     */
+  line-height     : 1em;         /* 1行の高さ  */
+  transition      : .3s;         /* なめらか変化 */
+  border          : 1px solid #666666;    /* 枠の指定 */
+  font-size       : 12px;
+  text-decoration : none;
+}
+.side .todo_button-delete:hover {
+  color         : #ffffff;     /* 背景色     */
+  background    : #ff0000;     /* 文字色     */
 }
