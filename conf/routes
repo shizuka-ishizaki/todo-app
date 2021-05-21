@@ -21,3 +21,6 @@ POST    /todo/$id<[0-9]+>/update    controllers.todo.ToDoController.update(id: L
 POST    /todo/delete                controllers.todo.ToDoController.delete
 
 GET     /category/list              controllers.category.ToDoCategoryController.list
+
+GET     /category/add               controllers.category.ToDoCategoryController.register
+POST    /category/add               controllers.category.ToDoCategoryController.add

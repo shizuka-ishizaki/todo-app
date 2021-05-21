@@ -5,7 +5,6 @@
 *@
 @import model._
 @import helper._
-@import lib.model.ToDo
 @(vv:   model.ViewValueToDoCategoryList)(implicit requestHeader: RequestHeader, messagesPrivider: MessagesProvider, flash: Flash)
 @implicitField = @{ FieldConstructor(FieldConstructorTemplate.f) }
 @common.Default(vv){
@@ -39,6 +38,9 @@
     <div class="footer">
       <a class="footer_button-back" href="@controllers.routes.HomeController.index()">
         戻る
+      </a>
+      <a class="footer_button-add" href="@controllers.category.routes.ToDoCategoryController.register()">
+        追加
       </a>
     </div>
   </div>
