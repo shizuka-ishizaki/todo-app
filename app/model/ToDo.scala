@@ -29,7 +29,7 @@ case class ViewValueToDoAdd(
   categorys:  Seq[(String, String)],
 ) extends ViewValueCommon
 
-// ToDo追加画面のviewvalue
+// ToDo編集画面のviewvalue
 case class ViewValueToDoEdit(
   title:      String,
   cssSrc:     Seq[String],
