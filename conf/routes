@@ -12,10 +12,12 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 GET     /todo/list                  controllers.todo.ToDoController.list
 
-GET     /todo/add                  controllers.todo.ToDoController.register
-POST    /todo/add                  controllers.todo.ToDoController.add
+GET     /todo/add                   controllers.todo.ToDoController.register
+POST    /todo/add                   controllers.todo.ToDoController.add
 
-GET     /todo/$id<[0-9]+>/edit     controllers.todo.ToDoController.edit(id: Long)
-POST    /todo/$id<[0-9]+>/update   controllers.todo.ToDoController.update(id: Long)
+GET     /todo/$id<[0-9]+>/edit      controllers.todo.ToDoController.edit(id: Long)
+POST    /todo/$id<[0-9]+>/update    controllers.todo.ToDoController.update(id: Long)
 
-POST    /todo/delete               controllers.todo.ToDoController.delete
+POST    /todo/delete                controllers.todo.ToDoController.delete
+
+GET     /category/list              controllers.category.ToDoCategoryController.list
