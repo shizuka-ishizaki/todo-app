@@ -15,7 +15,7 @@ import play.api.i18n.I18nSupport
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 import lib.persistence.default.{ToDoRepository, ToDoCategoryRepository}
-import model.{ViewValueToDoList, ToDoWithCategory, ViewValueToDoAdd}
+import model.{ViewValueToDoList, ToDoWithCategory, ViewValueToDoAdd, ViewValueToDoEdit, ViewValueError}
 import lib.model.ToDo
 import lib.model.ToDo.ToDoStatus
 import lib.model.ToDoCategory
@@ -126,7 +126,6 @@ class ToDoController @Inject()(val controllerComponents: ControllerComponents)
 
       // 処理が成功した場合に呼び出される関数
       (toDoForm: ToDoFormData) => {
-        // 登録処理としてSeqに画面から受け取ったコンテンツを持つTweetを追加
         // 登録が完了したら一覧画面へリダイレクトする
         val todoWithNoId = new ToDo(
           id          = None,
@@ -139,9 +138,107 @@ class ToDoController @Inject()(val controllerComponents: ControllerComponents)
           _ <- ToDoRepository.add(todoWithNoId)
         } yield {
           Redirect(routes.ToDoController.list())
-            .flashing("success" -> "Todoを追加しました!!")
         }
       }
     )
+  }
+
+  /**
+   * 編集画面を開く
+   */
+  def edit(id: Long) = Action async { implicit request: Request[AnyContent] =>
+    val toDoId = ToDo.Id(id)
+    for {
+      todo        <-  ToDoRepository.get(toDoId)
+      categorySeq <-  ToDoCategoryRepository.all()
+    } yield {
+      todo match {
+        case Some(todo) =>
+          val vv = ViewValueToDoEdit(
+            title     = "ToDo編集",
+            cssSrc    = Seq("main.css", "todo/edit.css"),
+            jsSrc     = Seq("main.js"),
+            id        = toDoId,
+            toDoForm  = toDoForm.fill(
+              ToDoFormData(
+                todo.v.title,
+                todo.v.body,
+                todo.v.status.code,
+                todo.v.categoryId,
+              )
+            ),
+            categorys = categorySeq.map( category =>
+              (category.id.toString -> category.v.name)
+            )
+          )
+          Ok(views.html.todo.Edit(vv))
+        case None       =>
+          val vv = ViewValueError(
+            title     = "404",
+            cssSrc    = Seq("main.css"),
+            jsSrc     = Seq("main.js"),
+            message   = "ページが見つかりません。"
+          )
+          NotFound(views.html.error.Page404(vv))
+      }
+    }
+  }
+
+  /**
+   * 更新処理
+   */
+  def update(id: Long) = Action async { implicit request: Request[AnyContent] =>
+    // foldでデータ受け取りの成功、失敗を分岐しつつ処理が行える
+    toDoForm
+        .bindFromRequest()
+        .fold(
+          // 処理が失敗した場合に呼び出される関数
+          // 処理失敗の例: バリデーションエラー
+          (formWithErrors: Form[ToDoFormData]) => {
+            println("koti" + formWithErrors)
+            for {
+              categorySeq <- ToDoCategoryRepository.all()
+            } yield {
+              val vv = ViewValueToDoEdit(
+                title     = "ToDo編集",
+                cssSrc    = Seq("main.css", "todo/edit.css"),
+                jsSrc     = Seq("main.js"),
+                id        = id,
+                toDoForm  = formWithErrors,
+                categorys = categorySeq.map( category =>
+                  (category.id.toString -> category.v.name)
+                )
+              )
+              BadRequest(views.html.todo.Edit(vv))
+            }
+          },
+
+          // 処理が成功した場合に呼び出される関数
+          (toDoForm: ToDoFormData) => {
+            println("ati" + toDoForm)
+            val todoWithNoId = new ToDo(
+              id          = Some(ToDo.Id(id)),
+              categoryId  = ToDoCategory.Id(toDoForm.categoryId),
+              title       = toDoForm.title,
+              body        = toDoForm.body,
+              status      = ToDoStatus.apply(toDoForm.status),
+            ).toEmbeddedId
+            for {
+              result <- ToDoRepository.update(todoWithNoId)
+            } yield {
+              result match {
+                case None        =>
+                  val vv = ViewValueError(
+                    title     = "404",
+                    cssSrc    = Seq("main.css"),
+                    jsSrc     = Seq("main.js"),
+                    message   = "ページが見つかりません。"
+                  )
+                  NotFound(views.html.error.Page404(vv))
+                case Some(_)  => Redirect(routes.ToDoController.list())
+              }
+            }
+          }
+        )
   }
 }

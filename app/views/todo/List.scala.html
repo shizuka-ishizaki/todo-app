@@ -8,43 +8,56 @@
 
 @(vv:   model.ViewValueToDoList)
 @common.Default(vv){
-  <div class="todoContainer">
-    <div class="todo">
-      <p class="title">タイトル</p>
-    </div>
-    <div class="todo">
-      <p class="body">本文</p>
-    </div>
-    <div class="todo">
-      <p class="status">ステータス</p>
-    </div>
-    <div class="todo">
-      <p class="categoryName">カテゴリ</p>
-    </div>
-  </div>
-
-  @for(todo <- vv.toDoList) {
+  <div class="content">
     <div class="todoContainer">
       <div class="todo">
-        <p class="title">@todo.title</p>
+        <p class="title">タイトル</p>
       </div>
       <div class="todo">
-        <p class="body">@todo.body</p>
+        <p class="body">本文</p>
       </div>
       <div class="todo">
-        <p class="status">@todo.status.name</p>
+        <p class="status">ステータス</p>
       </div>
       <div class="todo">
-        <p class="categoryName @todo.categoryColor.name">@todo.categoryName</p>
+        <p class="categoryName">カテゴリ</p>
+      </div>
+      <div class="todo">
+        <p class="edit"></p>
       </div>
     </div>
-  }
-  <div class="footer">
-    <a class="footer_button-back" href="@controllers.routes.HomeController.index()">
-      戻る
-    </a>
-    <a class="footer_button-add" href="@controllers.todo.routes.ToDoController.register()">
-      追加
-    </a>
+
+    @for(todo <- vv.toDoList) {
+      <div class="todoContainer">
+        <div class="todo">
+          <p class="title">@todo.title</p>
+        </div>
+        <div class="todo">
+          <p class="body">@todo.body</p>
+        </div>
+        <div class="todo">
+          <p class="status">@todo.status.name</p>
+        </div>
+        <div class="todo">
+          <p class="categoryName @todo.categoryColor.name">@todo.categoryName</p>
+        </div>
+        <div class="todo">
+          <p class="edit">
+            <a class="todo_button-edit"
+               href="@controllers.todo.routes.ToDoController.edit(todo.id)">
+              編集
+            </a>
+          </p>
+        </div>
+      </div>
+    }
+    <div class="footer">
+      <a class="footer_button-back" href="@controllers.routes.HomeController.index()">
+        戻る
+      </a>
+      <a class="footer_button-add" href="@controllers.todo.routes.ToDoController.register()">
+        追加
+      </a>
+    </div>
   </div>
 }

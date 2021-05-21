@@ -29,6 +29,16 @@ case class ViewValueToDoAdd(
   categorys:  Seq[(String, String)],
 ) extends ViewValueCommon
 
+// ToDo追加画面のviewvalue
+case class ViewValueToDoEdit(
+  title:      String,
+  cssSrc:     Seq[String],
+  jsSrc:      Seq[String],
+  id:         Long,
+  toDoForm:   Form[ToDoFormData],
+  categorys:  Seq[(String, String)],
+) extends ViewValueCommon
+
 //todo.listで使用するカテゴリーの情報を持ったcase class
 case class ToDoWithCategory(
   id:             ToDo.Id,
