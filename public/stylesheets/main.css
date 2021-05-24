@@ -26,7 +26,7 @@ body {
 }
 
 .main {
-  width:      980px;
+  width:      100%;
   margin:     100px auto;
   padding:    100px;
   box-shadow: 0 0 4px gray;
@@ -42,4 +42,72 @@ body {
 /******* フォームのinfoを非表示に *******/
 .info {
   display: none;
+}
+
+/******* footerのボタン共通CSS *******/
+
+.footer {
+  margin    : 10px;
+  padding   : 5px;
+  height    : 30px;
+}
+
+.footer .footer_button-edit {
+  float           : right;
+  display         : inline-block;
+  border-radius   : 20%;          /* 角丸       */
+  text-align      : center;      /* 文字位置   */
+  cursor          : pointer;     /* カーソル   */
+  padding         : 5px;         /* 余白       */
+  background      : #ffffff;     /* 背景色     */
+  color           : #ff7f00;     /* 文字色     */
+  line-height     : 1em;         /* 1行の高さ  */
+  transition      : .3s;         /* なめらか変化 */
+  border          : 1px solid #666666;    /* 枠の指定 */
+  font-size       : 12px;
+  text-decoration : none;
+}
+.footer .footer_button-edit:hover {
+  color         : #ffffff;     /* 背景色     */
+  background    : #ff7f00;     /* 文字色     */
+}
+
+.footer .footer_button-back {
+  float           : left;
+  display         : inline-block;
+  border-radius   : 20%;          /* 角丸       */
+  text-align      : center;      /* 文字位置   */
+  cursor          : pointer;     /* カーソル   */
+  padding         : 5px;         /* 余白       */
+  background      : #ffffff;     /* 背景色     */
+  color           : #999999;     /* 文字色     */
+  line-height     : 1em;         /* 1行の高さ  */
+  transition      : .3s;         /* なめらか変化 */
+  border          : 1px solid #666666;    /* 枠の指定 */
+  font-size       : 12px;
+  text-decoration : none;
+}
+.footer .footer_button-back:hover {
+  color         : #ffffff;     /* 背景色     */
+  background    : #999999;     /* 文字色     */
+}
+
+.footer .footer_button-add {
+  float           : right;
+  display         : inline-block;
+  border-radius   : 20%;          /* 角丸       */
+  text-align      : center;      /* 文字位置   */
+  cursor          : pointer;     /* カーソル   */
+  padding         : 5px;         /* 余白       */
+  background      : #ffffff;     /* 背景色     */
+  color           : #000000;     /* 文字色     */
+  line-height     : 1em;         /* 1行の高さ  */
+  transition      : .3s;         /* なめらか変化 */
+  border          : 1px solid #666666;    /* 枠の指定 */
+  font-size       : 12px;
+  text-decoration : none;
+}
+.footer .footer_button-add:hover {
+  color         : #ffffff;     /* 背景色     */
+  background    : #000000;     /* 文字色     */
 }
