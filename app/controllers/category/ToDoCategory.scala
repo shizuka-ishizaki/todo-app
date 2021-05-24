@@ -15,7 +15,7 @@ import play.api.i18n.I18nSupport
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 import lib.persistence.default.{ToDoRepository, ToDoCategoryRepository}
-import model.{ViewValueToDoCategoryList, Category, ViewValueError, ViewValueToDoCategoryAdd}
+import model.{ViewValueToDoCategoryList, Category, ViewValueError, ViewValueToDoCategoryAdd, ViewValueToDoCategoryEdit}
 
 import lib.model.ToDoCategory
 import lib.model.ToDoCategory.CategoryColor
@@ -105,9 +105,9 @@ class ToDoCategoryController @Inject()(val controllerComponents: ControllerCompo
             categorySeq <- ToDoCategoryRepository.all()
           } yield {
             val vv = ViewValueToDoCategoryAdd(
-              title     = "ToDoカテゴリー登録",
-              cssSrc    = Seq("main.css", "category/add.css"),
-              jsSrc     = Seq("main.js"),
+              title         = "ToDoカテゴリー登録",
+              cssSrc        = Seq("main.css", "category/add.css"),
+              jsSrc         = Seq("main.js"),
               categoryForm  = formWithErrors,
             )
             BadRequest(views.html.category.Add(vv))
@@ -133,4 +133,94 @@ class ToDoCategoryController @Inject()(val controllerComponents: ControllerCompo
       )
   }
 
+  /**
+   * 編集画面の表示用
+   */
+  def edit(id: Long) = Action async { implicit request: Request[AnyContent] =>
+    val toDoCategoryId = ToDoCategory.Id(id)
+    for {
+      category   <- ToDoCategoryRepository.get(toDoCategoryId)
+    } yield {
+      category match {
+        case Some(category) =>
+          val vv = ViewValueToDoCategoryEdit(
+            title         = "ToDoカテゴリー登録",
+            cssSrc        = Seq("main.css", "category/edit.css"),
+            jsSrc         = Seq("main.js"),
+            id            = toDoCategoryId,
+            categoryForm  = categoryForm.fill(
+              ToDoCategoryFormData(
+                category.v.name,
+                category.v.slug,
+                category.v.color.code,
+              )
+            ),
+          )
+          Ok(views.html.category.Edit(vv))
+        case None       =>
+          val vv = ViewValueError(
+            title     = "404",
+            cssSrc    = Seq("main.css"),
+            jsSrc     = Seq("main.js"),
+            message   = "ページが見つかりません。"
+          )
+          NotFound(views.html.error.Page404(vv))
+      }
+    }
+  }
+
+  /**
+   * 編集処理
+   */
+  def update(id: Long) = Action async { implicit request: Request[AnyContent] =>
+    // foldでデータ受け取りの成功、失敗を分岐しつつ処理が行える
+    categoryForm
+        .bindFromRequest()
+        .fold(
+          // 処理が失敗した場合に呼び出される関数
+          // 処理失敗の例: バリデーションエラー
+          (formWithErrors: Form[ToDoCategoryFormData]) => {
+            for {
+              categorySeq <- ToDoCategoryRepository.all()
+            } yield {
+              val vv = ViewValueToDoCategoryEdit(
+                title         = "ToDoカテゴリー登録",
+                cssSrc        = Seq("main.css", "category/edit.css"),
+                jsSrc         = Seq("main.js"),
+                id            = id,
+                categoryForm  = formWithErrors,
+              )
+              BadRequest(views.html.category.Edit(vv))
+            }
+          },
+
+          // 処理が成功した場合に呼び出される関数
+          (categoryForm: ToDoCategoryFormData) => {
+            // 更新が完了したら一覧画面へリダイレクトする
+            val categoryEmbeddedId = new ToDoCategory(
+              id       = Some(ToDoCategory.Id(id)),
+              name     = categoryForm.name,
+              slug     = categoryForm.slug,
+              color    = CategoryColor.apply(categoryForm.color),
+            ).toEmbeddedId
+            for {
+              result <- ToDoCategoryRepository.update(categoryEmbeddedId)
+            } yield {
+              result match {
+                case None        =>
+                  val vv = ViewValueError(
+                    title     = "404",
+                    cssSrc    = Seq("main.css"),
+                    jsSrc     = Seq("main.js"),
+                    message   = "ページが見つかりません。"
+                  )
+                  NotFound(views.html.error.Page404(vv))
+                case Some(_)  =>
+                  Redirect(routes.ToDoCategoryController.list())
+                      .flashing("success" -> "ToDoカテゴリーを更新しました!")
+              }
+            }
+          }
+        )
+  }
 }

@@ -33,7 +33,16 @@
         <div class="category">
           <p class="color">@category.color.name</p>
         </div>
+        <div class="category">
+          <p class="side">
+            <a class="category_icon"
+               href="@controllers.category.routes.ToDoCategoryController.edit(category.id)">
+              <i class="far fa-edit"></i>
+            </a>
+          </p>
+        </div>
       </div>
+
     }
     <div class="footer">
       <a class="footer_button-back" href="@controllers.routes.HomeController.index()">
