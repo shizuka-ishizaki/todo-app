@@ -41,6 +41,13 @@
             </a>
           </p>
         </div>
+        <div class="category">
+            @form(action = controllers.category.routes.ToDoCategoryController.delete(category.id)) {
+              @CSRF.formField
+              <input type="hidden" value="@category.id" name="id">
+              <i class="far fa-trash-alt delete"></i>
+            }
+        </div>
       </div>
 
     }

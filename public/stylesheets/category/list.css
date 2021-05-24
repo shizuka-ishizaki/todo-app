@@ -38,3 +38,7 @@
 .category .color {
   width: 80px;
 }
+
+.category .far.fa-trash-alt {
+  cursor: pointer;
+}

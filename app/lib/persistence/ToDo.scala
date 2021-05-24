@@ -7,7 +7,7 @@ package lib.persistence
 
 import scala.concurrent.Future
 import ixias.persistence.SlickRepository
-import lib.model.ToDo
+import lib.model.{ToDo, ToDoCategory}
 import slick.jdbc.JdbcProfile
 
 // ToDoRepository: ToDoTableへのクエリ発行を行うRepository層の定義
@@ -69,6 +69,40 @@ case class ToDoRepository[P <: JdbcProfile]()(implicit val driver: P)
         _   <- old match {
           case None    => DBIO.successful(0)
           case Some(_) => row.delete
+        }
+      } yield old
+    }
+
+  /**
+   * Delete ToDo By Category Data <br>
+   * Categoryが削除された時に、該当しているTodoを削除する
+   */
+  def removeByCategoryId(categoryId: ToDoCategory.Id): Future[Option[EntityEmbeddedId]] =
+    RunDBAction(ToDoTable) { slick =>
+      val row = slick.filter(_.categoryId === categoryId)
+      for {
+        old <- row.result.headOption
+        _   <- old match {
+          case None    => DBIO.successful(0)
+          case Some(_) => row.delete
+        }
+      } yield old
+    }
+
+  /**
+   * Update ToDo By Category Data <br>
+   * ”どのカテゴリにも紐づいていない” というデータになるようTodoを更新する <br>
+   * 暫定的に値を0に更新している <br>
+   * ※ToDoCategory.Idはオートインクリメントで付与される、かつ、Idは1から付与されているため0は存在しないデータという認識
+   */
+  def updateByCategoryId(categoryId: ToDoCategory.Id): Future[Option[EntityEmbeddedId]] =
+    RunDBAction(ToDoTable) { slick =>
+      val row = slick.filter(_.categoryId === categoryId)
+      for {
+        old <- row.result.headOption
+        _   <- old match {
+          case None    => DBIO.successful(0)
+          case Some(_) => row.map(_.categoryId).update(ToDoCategory.Id(0))
         }
       } yield old
     }

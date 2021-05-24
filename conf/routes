@@ -27,3 +27,5 @@ POST    /category/add                   controllers.category.ToDoCategoryControl
 
 GET     /category/$id<[0-9]+>/edit      controllers.category.ToDoCategoryController.edit(id: Long)
 POST    /category/$id<[0-9]+>/update    controllers.category.ToDoCategoryController.update(id: Long)
+
+POST    /category/delete                controllers.category.ToDoCategoryController.delete(id: Long)

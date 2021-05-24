@@ -65,7 +65,7 @@ class ToDoCategoryController @Inject()(val controllerComponents: ControllerCompo
       val vv = ViewValueToDoCategoryList(
         title           = "ToDoカテゴリーリスト",
         cssSrc          = Seq("main.css", "category/list.css"),
-        jsSrc           = Seq("main.js"),
+        jsSrc           = Seq("main.js",  "category/list.js"),
         categoryList    = categoryList
       )
       Ok(views.html.category.List(vv))
@@ -222,5 +222,40 @@ class ToDoCategoryController @Inject()(val controllerComponents: ControllerCompo
             }
           }
         )
+  }
+
+
+  /**
+   * 削除処理
+   */
+  def delete(id: Long) = Action async { implicit request: Request[AnyContent] =>
+    // requestから直接値を取得するサンプル
+    // val idOpt = request.body.asFormUrlEncoded.get("id").headOption
+    val toDoCategoryid = (ToDoCategory.Id(id))
+    for {
+      // 該当しているTodoを削除する場合
+      resultToDo      <- ToDoRepository.removeByCategoryId(toDoCategoryid)
+      // ”どのカテゴリにも紐づいていない” というデータになるようTodoを更新する場合
+      // resultToDo      <- ToDoRepository.updateByCategoryId(toDoCategoryid)
+      resultCategory  <- ToDoCategoryRepository.remove(toDoCategoryid)
+    } yield {
+      (resultToDo, resultCategory) match {
+        case (Some(_), Some(_))  =>
+          Redirect(routes.ToDoCategoryController.list())
+              .flashing("success" -> "ToDoカテゴリーと紐づくToDoを削除しました!")
+        case (_, Some(_))  =>
+          Redirect(routes.ToDoCategoryController.list())
+              .flashing("success" -> "ToDoカテゴリーを削除しました!")
+        case _        =>
+          val vv = ViewValueError(
+            title     = "404",
+            cssSrc    = Seq("main.css"),
+            jsSrc     = Seq("main.js"),
+            message   = "ページが見つかりません。"
+          )
+          NotFound(views.html.error.Page404(vv))
+
+      }
+    }
   }
 }
