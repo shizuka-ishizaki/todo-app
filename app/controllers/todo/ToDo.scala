@@ -246,11 +246,11 @@ class ToDoController @Inject()(val controllerComponents: ControllerComponents)
   /**
    * 削除処理
    */
-  def delete() = Action async { implicit request: Request[AnyContent] =>
+  def delete(id: Long) = Action async { implicit request: Request[AnyContent] =>
     // requestから直接値を取得するサンプル
-    val idOpt = request.body.asFormUrlEncoded.get("id").headOption
+    // val idOpt = request.body.asFormUrlEncoded.get("id").headOption
     for {
-      result <- ToDoRepository.remove(ToDo.Id(idOpt.map(_.toLong).getOrElse(0L)))
+      result <- ToDoRepository.remove(ToDo.Id(id))
     } yield {
       result match {
         case None        =>
