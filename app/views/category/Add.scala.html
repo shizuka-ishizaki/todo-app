@@ -28,12 +28,9 @@
         <div class="form__item-select">
           @select(
             vv.categoryForm("color"),
-            options = options(
-              (CategoryColor.RED.code.toString,    CategoryColor.RED.name),
-              (CategoryColor.GREEN.code.toString,  CategoryColor.GREEN.name),
-              (CategoryColor.BLUE.code.toString,   CategoryColor.BLUE.name),
-              (CategoryColor.YELLOW.code.toString, CategoryColor.YELLOW.name)
-            )
+            options = CategoryColor.values.map {
+              enum => (enum.code.toString, enum.name)
+            }
           )
         </div>
       </div>

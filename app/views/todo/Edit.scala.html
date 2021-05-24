@@ -37,11 +37,9 @@
         <div class="form__item-select">
           @select(
             vv.toDoForm("status"),
-            options = options(
-              (ToDoStatus.TODO.code.toString,ToDoStatus.TODO.name),
-              (ToDoStatus.DOING.code.toString,ToDoStatus.DOING.name),
-              (ToDoStatus.DONE.code.toString,ToDoStatus.DONE.name)
-            )
+            options = ToDoStatus.values.map {
+              enum => (enum.code.toString, enum.name)
+            }
           )
         </div>
       </div>
